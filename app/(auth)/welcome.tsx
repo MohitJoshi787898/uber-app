@@ -10,12 +10,13 @@ const Onbording = () => {
   const swiperRef = useRef<Swiper>(null);
   // const swiperRef useRef typeof swiper initial value null
   const [activeIndex, setActiveIndex] = useState(0);
+  const isLastSlide = activeIndex === onboarding?.length - 1;
 
   return (
     <SafeAreaView className="flex h-full items-center justify-between bg-white">
       <TouchableOpacity
         className="w-full flex justify-end items-end p-5"
-        onPress={() => router.replace("/(auth)/sigi-up")}
+        onPress={() => router.replace("/(auth)/sign-up")}
       >
         <Text className="text-black text-md  font-JakartaBold">Skip</Text>
       </TouchableOpacity>
@@ -46,7 +47,15 @@ const Onbording = () => {
           </View>
         ))}
       </Swiper>
-      <CustomButton title="Next" className="w-11/12 mt-10 mb-5" />
+      <CustomButton
+        title={isLastSlide ? "Get Started" : "Next"}
+        className="w-11/12 mt-10 mb-5"
+        onPress={() =>
+          isLastSlide
+            ? router.replace("/(auth)/sign-up")
+            : swiperRef?.current?.scrollBy(1)
+        }
+      />
     </SafeAreaView>
   );
 };
